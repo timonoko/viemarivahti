@@ -31,7 +31,7 @@ void kyttays() {
     digitalWrite(netti,LOW);
   }
   else halytys=1;
-  for(int i=1;i<20;i++){
+  for(int i=1;i<50;i++){
     digitalWrite(red,LOW);
     delay(30);
     digitalWrite(red,HIGH);
