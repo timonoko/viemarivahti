@@ -4,8 +4,6 @@
 #include <avr/sleep.h>
 #include <avr/wdt.h>
 
-
-
 const int vauhti=8;
 
 ISR(WDT_vect) {}
@@ -21,16 +19,18 @@ void nokosleep(int secs){
   delay(secs*100);
  }
 
-
-
 const int red=PB3;
 const int green=PB4;
 const int netti=PB0;
+int halytys=0;
 
 void kyttays() {
-  digitalWrite(netti,HIGH);
-  nokosleep(40);
-  digitalWrite(netti,LOW);
+  if (halytys==1) {
+    digitalWrite(netti,HIGH);
+    nokosleep(40);
+    digitalWrite(netti,LOW);
+  }
+  else halytys=1;
   for(int i=1;i<20;i++){
     digitalWrite(red,LOW);
     delay(30);
@@ -74,7 +74,8 @@ void loop() {
     digitalWrite(red,LOW);
     kyttays();
   }
-  if (adc_value>10) kyttays();
+  else if (adc_value>10) kyttays();
+  else halytys=0;
   nokosleep(30);
 }
 
