@@ -35,7 +35,7 @@ void kyttays() {
     digitalWrite(red,LOW);
     delay(30);
     digitalWrite(red,HIGH);
-    nokosleep(30);
+    nokosleep(32);
   }
 }
   
@@ -76,6 +76,6 @@ void loop() {
   }
   else if (adc_value>10) kyttays();
   else halytys=0;
-  nokosleep(30);
+  nokosleep(32);
 }
 
