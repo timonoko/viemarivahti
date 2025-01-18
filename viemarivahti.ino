@@ -51,7 +51,6 @@ void setup() {
   pinMode(netti, OUTPUT);
   digitalWrite(green, HIGH);
   digitalWrite(red, HIGH);
-  digitalWrite(netti,HIGH);
   delay(1000);
   digitalWrite(green, LOW);
   delay(1000);
@@ -59,7 +58,8 @@ void setup() {
   delay(1000);
   digitalWrite(green, HIGH);
   digitalWrite(red, HIGH);
-  delay(5000);
+  digitalWrite(netti,HIGH);
+  delay(10000);
   digitalWrite(netti,LOW);
 }
 
