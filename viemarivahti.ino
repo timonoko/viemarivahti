@@ -16,28 +16,29 @@ void nokosleep(int secs){
     wdt_disable();
     secs=secs-vauhti;
   }
-  delay(secs*1000);
+  // delay(secs*1000);
  }
 
 const int red=PB3;
 const int green=PB4;
 const int netti=PB0;
+
 int halytys=0;
 
-void kyttays() {
-  if (halytys==1) {
+void kyttays(int adc_value) {
+  if (halytys==40) {
     digitalWrite(netti,HIGH);
     nokosleep(40);
     digitalWrite(netti,LOW);
   }
-  else halytys=1;
-  for(int i=1;i<50;i++){
-    digitalWrite(red,LOW);
-    delay(30);
-    digitalWrite(red,HIGH);
-    nokosleep(32);
+  else halytys+=1;
+  digitalWrite(red,LOW);
+  if (adc_value<0) delay(60);
+  else delay(20);
+  digitalWrite(red,HIGH);
+  nokosleep(32);
   }
-}
+
   
 
 void setup() {
@@ -66,16 +67,18 @@ void loop() {
   digitalWrite(netti,LOW);
   digitalWrite(green, HIGH);
   digitalWrite(red, HIGH);
+  ADCSRA |= (1<<ADEN); //Enable ADC
+  //ACSR = (0<<ACD) ; //Enable the analog comparator
   int adc_value = (analogRead(1)/10)-40;  
-  digitalWrite(green,LOW);
-  delay(30);
-  digitalWrite(green,HIGH);
-  if (adc_value<0) {
-    digitalWrite(red,LOW);
-    kyttays();
+  if ((adc_value<0) || (adc_value>10)) kyttays(adc_value);
+  else {
+    halytys=0;
+    digitalWrite(green,LOW);
+    delay(30);
+    digitalWrite(green,HIGH);
   }
-  else if (adc_value>10) kyttays();
-  else halytys=0;
-  nokosleep(32);
+  ADCSRA &= ~(1<<ADEN); //Disable ADC
+  //ACSR = (1<<ACD); //Disable the analog comparator
+  nokosleep(40);
 }
 
