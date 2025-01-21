@@ -30,6 +30,7 @@ void kyttays(int adc_value) {
     digitalWrite(netti,HIGH);
     nokosleep(40);
     digitalWrite(netti,LOW);
+    halytys=30;
   }
   else halytys+=1;
   digitalWrite(red,LOW);
